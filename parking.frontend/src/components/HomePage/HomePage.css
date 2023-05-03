@@ -1,0 +1,55 @@
+* {
+    background-color: #B9CFD4;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    padding: 50px;
+}
+
+.upper-text {
+    font-family: 'Lexend Giga', cursive;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 39px;
+    color: #FFFFFF;
+    text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25), 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.parking-lot-container {
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    width: 334px;
+    height: 500px;
+    left: 28px;
+    top: 94px;
+    background: #404040;
+    border: 3px solid #FFFFFF;
+    justify-content: space-between;
+}
+
+.parking-space-left {
+    display: flex;
+    flex-direction: column;
+}
+
+.parking-space-right {
+    display: flex;
+    flex-direction: column;
+}
+
+.lower-text {
+    font-family: 'Lexend', cursive;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 39px;
+    text-align: center;
+    color: #FFFFFF;
+}
