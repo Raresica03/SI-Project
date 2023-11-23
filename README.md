@@ -35,3 +35,122 @@ b. Locul de parcare reprezentat în aplicație va fi colorat cu roșu
 c. Ecranul de la intrarea în parcare care indică numărul de locuri disponibile va afișa un număr cu 1 mai mic decât cel precedent 
 ```
 La început ecranul de la intrare va afișa numărul total de locuri, acesta scăzând pe măsura ce se ocupă
+
+package org.loose.vvs.selenium;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+public class SeleniumTest2 {
+    private WebDriver webDriver;
+
+    private static WebDriverManager webDriverManager;
+
+    @BeforeAll
+    static void beforeAll() {
+
+        if (WebDriverManager.firefoxdriver().getBrowserPath().isPresent()) {
+            webDriverManager = WebDriverManager.firefoxdriver();
+            return;
+        }
+    }
+
+    @BeforeEach
+    public void setup() {
+        assertNotNull(webDriverManager);
+        webDriverManager.setup();
+        webDriver = webDriverManager.create();
+        webDriver.manage().timeouts().implicitlyWait(Duration.of(5, ChronoUnit.SECONDS));
+    }
+
+    @AfterEach
+    void tearDown() {
+        webDriver.quit();
+    }
+
+
+
+    @Test
+    void testSearchFunctionality()
+    {
+        webDriver.get("https://tutorialsninja.com/demo/index.php?route=common/home");
+
+
+
+        WebElement input = webDriver.findElement(By.xpath("/html/body/header/div/div/div[2]/div/input"));
+        assertNotNull(input);
+        assertEquals("text",input.getAttribute("type"));
+        assertEquals("Search",input.getAttribute("placeholder"));
+
+        Actions actions = new Actions(webDriver);
+        actions.sendKeys(input, "mac").perform();
+
+        WebElement search = webDriver.findElement(By.xpath("/html/body/header/div/div/div[2]/div/span/button"));
+        search.click();
+        List<WebElement> elements = webDriver.findElements(By.className("img-responsive"));
+
+        //assertNotNull(input);
+        assertEquals(4, elements.size());
+
+    }
+
+
+    @Test
+    void testLogin()
+    {
+        webDriver.get("https://tutorialsninja.com/demo/index.php?route=common/home");
+        WebElement element = webDriver.findElement(By.xpath("/html/body/nav/div/div[2]/ul/li[2]/a"));
+
+        element.click();
+
+        WebElement loginPage = webDriver.findElement(By.xpath("/html/body/nav/div/div[2]/ul/li[2]/ul/li[2]/a"));
+        loginPage.click();
+
+        WebElement email = webDriver.findElement(By.xpath("/html/body/div[2]/div/div/div/div[2]/div/form/div[1]/input"));
+        WebElement password = webDriver.findElement(By.xpath("/html/body/div[2]/div/div/div/div[2]/div/form/div[2]/input"));
+        WebElement loginButton = webDriver.findElement(By.xpath("/html/body/div[2]/div/div/div/div[2]/div/form/input"));
+
+        email.sendKeys("daniel@email.com");
+        password.sendKeys("test");
+
+        loginButton.click();
+
+
+
+        assertEquals("https://tutorialsninja.com/demo/index.php?route=account/account",webDriver.getCurrentUrl());
+
+    }
+
+    @Test
+    void ClickOnLink()
+    {
+        webDriver.get("https://tutorialsninja.com/demo/index.php?route=common/home");
+
+
+
+        WebElement tabletButton = webDriver.findElement(By.xpath("/html/body/div[1]/nav/div[2]/ul/li[4]/a"));
+
+
+
+        tabletButton.click();
+
+
+        assertEquals("https://tutorialsninja.com/demo/index.php?route=product/category&path=57",webDriver.getCurrentUrl());
+
+    }
+}
+
